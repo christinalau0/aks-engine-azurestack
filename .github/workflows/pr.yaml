@@ -57,6 +57,12 @@ jobs:
           sudo chmod +x /usr/local/bin/k
       - name: Build aks-engine-azurestack binary
         run: make build-binary
+      - name: Dummy1
+        run: echo ${{ secrets.TEST_AZURE_TENANT_ID }}
+      - name: Dummy2
+        env:
+          DUMMY: ${{ secrets.TEST_AZURE_TENANT_ID }}
+        run: echo ${DUMMY}
       - name: Validate 1.22 no-egress scenario
         env:
           ORCHESTRATOR_RELEASE: "1.22"

@@ -62,7 +62,11 @@ jobs:
       - name: Dummy2
         env:
           DUMMY: ${{ secrets.TEST_AZURE_TENANT_ID }}
-        run: echo ${DUMMY}
+        run: echo $DUMMY
+      - name: Dummy3
+        env:
+          DUMMY: Dummy3
+        run: echo $DUMMY
       - name: Validate 1.22 no-egress scenario
         env:
           ORCHESTRATOR_RELEASE: "1.22"

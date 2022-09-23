@@ -58,10 +58,10 @@ jobs:
       - name: Build aks-engine-azurestack binary
         run: make build-binary
       - name: Dummy1
-        run: echo ${{ secrets.TEST_AZURE_TENANT_ID }}
+        run: echo '${{ secrets.TEST_AZURE_TENANT_ID }}'
       - name: Dummy2
         env:
-          DUMMY: ${{ secrets.TEST_AZURE_TENANT_ID }}
+          DUMMY: '${{ secrets.TEST_AZURE_TENANT_ID }}'
         run: echo $DUMMY
       - name: Dummy3
         env:
@@ -71,10 +71,10 @@ jobs:
         env:
           ORCHESTRATOR_RELEASE: "1.22"
           CLUSTER_DEFINITION: "examples/no_outbound.json"
-          TENANT_ID: ${{ secrets.TEST_AZURE_TENANT_ID }}
-          SUBSCRIPTION_ID: ${{ secrets.TEST_AZURE_SUB_ID }}
-          CLIENT_ID: ${{ secrets.TEST_AZURE_SP_ID }}
-          CLIENT_SECRET: ${{ secrets.TEST_AZURE_SP_PW }}
+          TENANT_ID: '${{ secrets.TEST_AZURE_TENANT_ID }}'
+          SUBSCRIPTION_ID: '${{ secrets.TEST_AZURE_SUB_ID }}'
+          CLIENT_ID: '${{ secrets.TEST_AZURE_SP_ID }}'
+          CLIENT_SECRET: '${{ secrets.TEST_AZURE_SP_PW }}'
           LOCATION: "eastus"
           CLEANUP_ON_EXIT: true
           CLEANUP_IF_FAIL: true
@@ -87,10 +87,10 @@ jobs:
         env:
           ORCHESTRATOR_RELEASE: "1.23"
           CLUSTER_DEFINITION: "examples/no_outbound.json"
-          TENANT_ID: ${{ secrets.TEST_AZURE_TENANT_ID }}
-          SUBSCRIPTION_ID: ${{ secrets.TEST_AZURE_SUB_ID }}
-          CLIENT_ID: ${{ secrets.TEST_AZURE_SP_ID }}
-          CLIENT_SECRET: ${{ secrets.TEST_AZURE_SP_PW }}
+          TENANT_ID: '${{ secrets.TEST_AZURE_TENANT_ID }}'
+          SUBSCRIPTION_ID: '${{ secrets.TEST_AZURE_SUB_ID }}'
+          CLIENT_ID: '${{ secrets.TEST_AZURE_SP_ID }}'
+          CLIENT_SECRET: '${{ secrets.TEST_AZURE_SP_PW }}'
           LOCATION: "eastus"
           CLEANUP_ON_EXIT: true
           CLEANUP_IF_FAIL: true

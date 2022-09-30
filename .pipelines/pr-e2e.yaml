@@ -61,8 +61,6 @@ jobs:
     displayName: Build cross-architectural binaries
   - script: make validate-dependencies
     displayName: Check if go mod is up-to-date
-  - script: make test
-    displayName: Run unit tests
 
 - template: e2e-job-template.yaml
   parameters:

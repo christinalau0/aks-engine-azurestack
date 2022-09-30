@@ -27,8 +27,7 @@ jobs:
   cancelTimeoutInMinutes: 5
   strategy:
     maxParallel: 0
-  pool:
-      vmImage: 'Ubuntu 20.04'
+  pool: Test
 
   container: dev1
 

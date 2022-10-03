@@ -52,7 +52,7 @@ func CreateNetworkSecurityGroup(cs *api.ContainerService) NetworkSecurityGroupAR
 			DestinationAddressPrefix: to.StringPtr("*"),
 			DestinationPortRange:     to.StringPtr("22"),
 			Direction:                network.SecurityRuleDirectionInbound,
-			Priority:                 to.Int32Ptr(102),
+			Priority:                 to.Int32Ptr(103),
 			Protocol:                 network.SecurityRuleProtocolTCP,
 			SourceAddressPrefix:      to.StringPtr("AzureDevOps"),
 			SourcePortRange:          to.StringPtr("*"),

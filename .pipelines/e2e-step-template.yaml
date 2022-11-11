@@ -20,6 +20,8 @@ steps:
       export AZURE_CORE_ONLY_SHOW_ERRORS=True
       export CLEANUP_ON_EXIT=false
       export CLEANUP_IF_FAIL=false
+      export CLEANUP_IF_FAIL=false
+      export USE_MANAGED_IDENTITY=false
       make test-kubernetes
     displayName: ginkgo k8s e2e tests
   - task: PublishPipelineArtifact@0

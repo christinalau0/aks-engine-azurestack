@@ -55,14 +55,14 @@ jobs:
     displayName: Install dependencies
   - script: make ensure-generated
     displayName: Check if generated code is up to date
-  - script: make generate test-style
-    displayName: Run linting rules
-  - script: make build-cross
-    displayName: Build cross-architectural binaries
-  - script: make validate-dependencies
-    displayName: Check if go mod is up-to-date
-  - script: make test
-    displayName: Run unit tests
+  # - script: make generate test-style
+  #   displayName: Run linting rules
+  # - script: make build-cross
+  #   displayName: Build cross-architectural binaries
+  # - script: make validate-dependencies
+  #   displayName: Check if go mod is up-to-date
+  # - script: make test
+  #   displayName: Run unit tests
 
 - template: e2e-job-template.yaml
   parameters:

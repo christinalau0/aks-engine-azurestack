@@ -154,6 +154,7 @@ var _ = BeforeSuite(func() {
 		Expect(success).To(BeTrue())
 		firstMasterRegexp, err = regexp.Compile(firstMasterRegexStr)
 		Expect(err).NotTo(HaveOccurred())
+	}
 	if hasAddon, addon := eng.HasAddon(common.ClusterAutoscalerAddonName); hasAddon {
 		clusterAutoscalerAddon = addon
 		if len(addon.Pools) > 0 {

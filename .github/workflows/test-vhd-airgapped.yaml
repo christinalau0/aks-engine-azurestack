@@ -46,7 +46,7 @@ jobs:
           SKIP_TEST: false
           AZURE_CORE_ONLY_SHOW_ERRORS: true
           BLOCK_SSH: false
-          RETAIN_SSH: false
+          RETAIN_SSH: true
           BLOCK_OUTBOUND_INTERNET: true
           CONTAINER_RUNTIME: containerd
           WINDOWS_NODE_IMAGE_SUBSCRIPTION_ID: ${{ secrets.TEST_AZURE_SUB_ID }}

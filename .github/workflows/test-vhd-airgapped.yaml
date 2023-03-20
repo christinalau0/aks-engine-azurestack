@@ -53,12 +53,12 @@ jobs:
           WINDOWS_NODE_IMAGE_RESOURCE_GROUP: AKSeImages
           WINDOWS_NODE_IMAGE_GALLERY: AKSeGallery
           WINDOWS_NODE_IMAGE_NAME: windows2019containerd
-          WINDOWS_NODE_IMAGE_VERSION: 2023.073.1
+          WINDOWS_NODE_IMAGE_VERSION: 2023.079.1
           LINUX_NODE_IMAGE_SUBSCRIPTION_ID: ${{ secrets.TEST_AZURE_SUB_ID }}
           LINUX_NODE_IMAGE_RESOURCE_GROUP: AKSeImages
           LINUX_NODE_IMAGE_GALLERY: AKSeGallery
           LINUX_NODE_IMAGE_NAME: ubuntu-20.04
-          LINUX_NODE_IMAGE_VERSION: 2023.073.1
+          LINUX_NODE_IMAGE_VERSION: 2023.079.1
           GINKGO_FOCUS: "should validate filesystem config"
         run: make test-kubernetes
       - name: Validate 1.24 no-egress scenario, upgrade
@@ -126,10 +126,10 @@ jobs:
           WINDOWS_NODE_IMAGE_RESOURCE_GROUP: AKSeImages
           WINDOWS_NODE_IMAGE_GALLERY: AKSeGallery
           WINDOWS_NODE_IMAGE_NAME: windows2019containerd
-          WINDOWS_NODE_IMAGE_VERSION: 2023.073.1
+          WINDOWS_NODE_IMAGE_VERSION: 2023.079.1
           LINUX_NODE_IMAGE_SUBSCRIPTION_ID: ${{ secrets.TEST_AZURE_SUB_ID }}
           LINUX_NODE_IMAGE_RESOURCE_GROUP: AKSeImages
           LINUX_NODE_IMAGE_GALLERY: AKSeGallery
           LINUX_NODE_IMAGE_NAME: ubuntu-20.04
-          LINUX_NODE_IMAGE_VERSION: 2023.073.1
+          LINUX_NODE_IMAGE_VERSION: 2023.079.1
         run: make test-kubernetes

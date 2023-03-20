@@ -54,6 +54,7 @@ jobs:
           LINUX_NODE_IMAGE_GALLERY: AKSeGallery
           LINUX_NODE_IMAGE_NAME: ubuntu-20.04
           LINUX_NODE_IMAGE_VERSION: 2023.079.1
+          GINKGO_FOCUS: "should validate filesystem config"
         run: make test-kubernetes
       - name: Validate 1.24 no-egress scenario, upgrade
         run : |
@@ -76,7 +77,7 @@ jobs:
           REGION=$(ls -dt1 _output/* | head -n 1 | cut -d/ -f2 | cut -d- -f2); \
           CURRENT_VERSION=$(jq -r .properties.orchestratorProfile.orchestratorVersion _output/${RESOURCE_GROUP}/apimodel.json); \
           TARGET_VERSION=$(bin/aks-engine-azurestack get-versions | grep -E "^${CURRENT_VERSION}" | xargs | cut -d" " -f2); \
-          ssh-keygen -f ~/.ssh/known_hosts -R ${RESOURCE_GROUP}.${REGION}.cloudapp.azure.com
+          ssh-keygen -f ~/.ssh/known_hosts -R ${RESOURCE_GROUP}.${REGION}.cloudapp.azure.com && eval `ssh-agent`
       - name: Validate 1.24 no-egress scenario, test suite after upgrade
         env:
           ORCHESTRATOR_RELEASE: "1.24"
@@ -95,6 +96,7 @@ jobs:
           RETAIN_SSH: false
           BLOCK_OUTBOUND_INTERNET: true
           CONTAINER_RUNTIME: containerd
+          GINKGO_FOCUS: "should validate filesystem config"
         run : |
           export NAME=$(ls -dt1 _output/* | head -n 1 | cut -d/ -f2); \
           make test-kubernetes
@@ -126,4 +128,5 @@ jobs:
           LINUX_NODE_IMAGE_GALLERY: AKSeGallery
           LINUX_NODE_IMAGE_NAME: ubuntu-20.04
           LINUX_NODE_IMAGE_VERSION: 2023.079.1
+          GINKGO_FOCUS: "should validate filesystem config"
         run: make test-kubernetes

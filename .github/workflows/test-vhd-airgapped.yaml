@@ -77,7 +77,7 @@ jobs:
           REGION=$(ls -dt1 _output/* | head -n 1 | cut -d/ -f2 | cut -d- -f2); \
           CURRENT_VERSION=$(jq -r .properties.orchestratorProfile.orchestratorVersion _output/${RESOURCE_GROUP}/apimodel.json); \
           TARGET_VERSION=$(bin/aks-engine-azurestack get-versions | grep -E "^${CURRENT_VERSION}" | xargs | cut -d" " -f2); \
-          ssh-keygen -f ~/.ssh/known_hosts -R ${RESOURCE_GROUP}.${REGION}.cloudapp.azure.com; eval "$(ssh-agent -k)"
+          ssh-keygen -f ~/.ssh/known_hosts -R ${RESOURCE_GROUP}.${REGION}.cloudapp.azure.com
       - name: Validate 1.24 no-egress scenario, test suite after upgrade
         env:
           ORCHESTRATOR_RELEASE: "1.24"
@@ -99,6 +99,9 @@ jobs:
           GINKGO_FOCUS: "should validate filesystem config"
         run : |
           export NAME=$(ls -dt1 _output/* | head -n 1 | cut -d/ -f2); \
+          echo "Original: SSH_AUTH_SOCK: ${SSH_AUTH_SOCK}, SSH_AGENT_PID: ${SSH_AGENT_PID}";\
+          eval "$(ssh-agent -k)"; echo "After eval ssh-agent -k: SSH_AUTH_SOCK: ${SSH_AUTH_SOCK}, SSH_AGENT_PID: ${SSH_AGENT_PID}";\
+          export SSH_AUTH_SOCK=; export SSH_AGENT_PID=; echo "After set variables to empty: SSH_AUTH_SOCK: ${SSH_AUTH_SOCK}, SSH_AGENT_PID: ${SSH_AGENT_PID}";\
           make test-kubernetes
       - name: Validate 1.25 no-egress scenario
         env:

@@ -133,5 +133,5 @@ jobs:
           LINUX_NODE_IMAGE_VERSION: 2023.079.1
           GINKGO_FOCUS: "should validate filesystem config"
         run: |
-        ssh-agent -a $SSH_AUTH_SOCK;\
-        make test-kubernetes
+          ssh-agent -a $SSH_AUTH_SOCK;\
+          make test-kubernetes

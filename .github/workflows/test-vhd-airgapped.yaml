@@ -99,9 +99,6 @@ jobs:
           GINKGO_FOCUS: "should validate filesystem config"
         run : |
           export NAME=$(ls -dt1 _output/* | head -n 1 | cut -d/ -f2); \
-          echo "Original: SSH_AUTH_SOCK: ${SSH_AUTH_SOCK}, SSH_AGENT_PID: ${SSH_AGENT_PID}";\
-          eval "$(ssh-agent -k)"; echo "After eval ssh-agent -k: SSH_AUTH_SOCK: ${SSH_AUTH_SOCK}, SSH_AGENT_PID: ${SSH_AGENT_PID}";\
-          export SSH_AUTH_SOCK=; export SSH_AGENT_PID=; echo "After set variables to empty: SSH_AUTH_SOCK: ${SSH_AUTH_SOCK}, SSH_AGENT_PID: ${SSH_AGENT_PID}";\
           make test-kubernetes
       - name: Validate 1.25 no-egress scenario
         env:

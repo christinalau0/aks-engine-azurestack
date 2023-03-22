@@ -14,6 +14,7 @@ jobs:
     uses: ./.github/workflows/test-vhd-no-egress.yaml
     with:
       from_branch: ${{github.event.inputs.from_branch}}
+    secrets: inherit
   create-release-branch:
     needs: call-test-vhd-no-egress
     runs-on: ubuntu-latest

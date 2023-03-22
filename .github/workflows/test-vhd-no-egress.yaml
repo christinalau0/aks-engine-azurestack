@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       from_branch:
-        description: 'Which branch are we running this pipeline for?'
+        description: 'Which branch are we running this pipeline for? (if left blank, by default will use the branch used to trigger workflow)'
         required: false
         default: ''
   workflow_call:

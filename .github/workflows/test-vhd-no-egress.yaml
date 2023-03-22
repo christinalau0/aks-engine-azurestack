@@ -2,6 +2,16 @@ name: Test VHD No Egress
 
 on:
   workflow_dispatch:
+    inputs:
+      from_branch:
+        description: 'Which branch are we running this pipeline for?'
+        required: false
+        default: ''
+  workflow_call:
+    inputs:
+      from_branch:
+        required: true
+        type: string
 
 jobs:
   e2e:
@@ -9,6 +19,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{inputs.from_branch}}
       - name: Set up Go
         uses: actions/setup-go@v3
         with:

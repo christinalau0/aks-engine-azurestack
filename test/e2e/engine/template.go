@@ -119,8 +119,8 @@ func ParseConfig(cwd, clusterDefinition, name string) (*Config, error) {
 	c.ClusterDefinitionTemplate = filepath.Join(cwd, clusterDefinitionTemplate)
 	c.OutputPath = filepath.Join(cwd, c.OutputDirectory)
 	c.GeneratedDefinitionPath = filepath.Join(cwd, generatedDefinitionPath)
-	c.GeneratedTemplatePath = filepath.Join(cwd, generatedDefinitionPath, "azuredeploy.json")
-	c.GeneratedParametersPath = filepath.Join(cwd, generatedDefinitionPath, "azuredeploy.parameters.json")
+	c.GeneratedTemplatePath = filepath.Join("./", generatedDefinitionPath, "azuredeploy.json")
+	c.GeneratedParametersPath = filepath.Join("./", generatedDefinitionPath, "azuredeploy.parameters.json")
 	return c, nil
 }
 

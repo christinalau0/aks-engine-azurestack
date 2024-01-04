@@ -81,7 +81,7 @@ validate-shell:
 .PHONY: generate
 generate: bootstrap
 	@echo "$$(go-bindata --version)"
-	go generate $(GOFLAGS) -v ./... > /dev/null 2>&1
+	go generate $(GOFLAGS) -v ./...
 
 .PHONY: generate-azure-constants
 generate-azure-constants: build-binary

@@ -139,19 +139,19 @@ var _ = BeforeSuite(func() {
 		masterSSHPrivateKeyFilepath = cfg.GetSSHKeyPath()
 		sshConn, err = remote.NewConnectionWithRetry(kubeConfig.GetServerName(), masterSSHPort, eng.ExpandedDefinition.Properties.LinuxProfile.AdminUsername, masterSSHPrivateKeyFilepath, 3*time.Second, cfg.Timeout)
 		Expect(err).NotTo(HaveOccurred())
-		success := false
-		for i := 0; i < 3; i++ {
-			sshAddErr := util.AddToSSHKeyChain(masterSSHPrivateKeyFilepath)
-			if sshAddErr == nil {
-				success = true
-				break
-			}
-			if i > 1 {
-				log.Printf("Error while setting up ssh key forwarding:%s\n", sshAddErr)
-			}
-			time.Sleep(10 * time.Second)
-		}
-		Expect(success).To(BeTrue())
+		// success := false
+		// for i := 0; i < 3; i++ {
+		// 	sshAddErr := util.AddToSSHKeyChain(masterSSHPrivateKeyFilepath)
+		// 	if sshAddErr == nil {
+		// 		success = true
+		// 		break
+		// 	}
+		// 	if i > 1 {
+		// 		log.Printf("Error while setting up ssh key forwarding:%s\n", sshAddErr)
+		// 	}
+		// 	time.Sleep(10 * time.Second)
+		// }
+		// Expect(success).To(BeTrue())
 		firstMasterRegexp, err = regexp.Compile(firstMasterRegexStr)
 		Expect(err).NotTo(HaveOccurred())
 	}

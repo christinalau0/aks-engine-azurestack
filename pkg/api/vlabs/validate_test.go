@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/aks-engine-azurestack/pkg/api/common"
 	"github.com/Azure/aks-engine-azurestack/pkg/helpers"
 	compute "github.com/Azure/azure-sdk-for-go/profile/p20200901/resourcemanager/compute/armcompute"
-	"github.com/Azure/go-autorest/autorest/azure"
+	"github.com/Azure/go-autorest/autorest/to"
 	"github.com/blang/semver"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
@@ -4583,7 +4583,7 @@ func TestValidateCustomCloudProfile(t *testing.T) {
 				Location: "testlocation",
 				Properties: &Properties{
 					CustomCloudProfile: &CustomCloudProfile{
-						Environment: &azure.Environment{
+						Environment: &Environment{
 							Name: "NonAzureStack",
 						},
 						AuthenticationMethod: "azure_ad",

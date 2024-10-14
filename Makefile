@@ -99,6 +99,7 @@ tidy:
 vendor: tidy
 	$(GO) mod vendor
 
+.PHONY: build-binary
 build-binary: generate
 	go build $(GOFLAGS) -v -ldflags "$(LDFLAGS)" -buildvcs=false -o $(BINARY_DEST_DIR)/aks-engine-azurestack .
 

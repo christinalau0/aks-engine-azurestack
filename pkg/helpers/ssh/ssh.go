@@ -70,7 +70,7 @@ func ValidateConfig(host *JumpBox) error {
 
 func clientWithRetry(ctx context.Context, host *RemoteHost) (*ssh.Client, error) {
 	// TODO Granular retry func
-	retryFunc := func(err error) bool {
+	retryFunc := func(_ error) bool {
 		select {
 		case <-ctx.Done():
 			return false

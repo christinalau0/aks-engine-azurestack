@@ -263,7 +263,7 @@ func createOutboundRules(prop *api.Properties) *[]network.OutboundRule {
 }
 
 // CreateStandardLoadBalancerForNodePools returns an ARM resource for the Standard LB that has all nodes in its backend pool
-func CreateStandardLoadBalancerForNodePools(prop *api.Properties, isVMSS bool) LoadBalancerARM {
+func CreateStandardLoadBalancerForNodePools(prop *api.Properties, _ bool) LoadBalancerARM {
 	loadBalancer := LoadBalancerARM{
 		ARMResource: ARMResource{
 			APIVersion: "[variables('apiVersionNetwork')]",

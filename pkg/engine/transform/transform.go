@@ -431,7 +431,7 @@ func (t *Transformer) RemoveResourcesAndOutputsForScaling(logger *logrus.Entry, 
 }
 
 // NormalizeResourcesForK8sMasterUpgrade takes a template and removes elements that are unwanted in any scale up/down case
-func (t *Transformer) NormalizeResourcesForK8sMasterUpgrade(logger *logrus.Entry, templateMap map[string]interface{}, isMasterManagedDisk bool, agentPoolsToPreserve map[string]bool) error {
+func (t *Transformer) NormalizeResourcesForK8sMasterUpgrade(logger *logrus.Entry, templateMap map[string]interface{}, isMasterManagedDisk bool, _ map[string]bool) error {
 	resources := templateMap[resourcesFieldName].([]interface{})
 	resourceTypeToProcess := map[string]bool{
 		vmResourceType: true, vmExtensionType: true, nicResourceType: true,
@@ -601,7 +601,7 @@ func RemoveNsgDependency(logger *logrus.Entry, resourceName string, resourceMap 
 }
 
 // NormalizeResourcesForK8sAgentUpgrade takes a template and removes elements that are unwanted in any scale/upgrade case
-func (t *Transformer) NormalizeResourcesForK8sAgentUpgrade(logger *logrus.Entry, templateMap map[string]interface{}, isMasterManagedDisk bool, agentPoolsToPreserve map[string]bool) error {
+func (t *Transformer) NormalizeResourcesForK8sAgentUpgrade(logger *logrus.Entry, templateMap map[string]interface{}, _ bool, agentPoolsToPreserve map[string]bool) error {
 	logger.Infoln("Running NormalizeResourcesForK8sMasterUpgrade....")
 	resources := templateMap[resourcesFieldName].([]interface{})
 	resourceTypeToProcess := map[string]bool{

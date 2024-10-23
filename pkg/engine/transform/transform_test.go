@@ -12,111 +12,111 @@ import (
 
 	"github.com/Azure/aks-engine-azurestack/pkg/helpers"
 	"github.com/Azure/aks-engine-azurestack/pkg/i18n"
-	. "github.com/onsi/gomega"
+	"github.com/onsi/gomega"
 	"github.com/sirupsen/logrus"
 )
 
 func TestNormalizeForK8sVMASScalingUp(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "TestNormalizeForK8sVMASScalingUp")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_vmas_scale_up_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := Transformer{}
 	e = transformer.NormalizeForK8sVMASScalingUp(logger, templateMap)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "TestNormalizeForK8sVMASScalingUp")
 }
 
 func TestNormalizeForK8sAddVMASPool(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "TestNormalizeForK8sAddVMASPool")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_addpool_vmas.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := Transformer{}
 	e = transformer.NormalizeForK8sAddVMASPool(logger, templateMap)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "TestNormalizeForK8sAddVMASPool")
 }
 
 func TestNormalizeMasterResourcesForVMSSPoolUpgrade(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "TestNormalizeMasterResourcesForVMSSPoolUpgrade")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_slb_vmss_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_vmss_pool_upgrade_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := Transformer{}
 	e = transformer.NormalizeMasterResourcesForVMSSPoolUpgrade(logger, templateMap)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "TestNormalizeMasterResourcesForVMSSPoolUpgrade")
 }
 
 func TestRemoveMasterResourcesAndOutputsForScaling(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "RemoveResourcesAndOutputsForScaling")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_scale_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := Transformer{}
 	e = transformer.RemoveResourcesAndOutputsForScaling(logger, templateMap)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "RemoveResourcesAndOutputsForScaling")
 }
 
 func TestNormalizeForK8sVMASScalingUpWithVnet(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "TestNormalizeForK8sVMASScalingUp")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_vnet_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_vnet_scale_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := Transformer{}
 	e = transformer.NormalizeForK8sVMASScalingUp(logger, templateMap)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "TestNormalizeForK8sVMASScalingUpWithVnet")
 }
 
 func TestNormalizeResourcesForK8sMasterOnlyUpgrade(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "TestNormalizeResourcesForK8sMasterOnlyUpgrade")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_master_only_upgrade_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := &Transformer{
 		Translator: &i18n.Translator{
@@ -124,21 +124,21 @@ func TestNormalizeResourcesForK8sMasterOnlyUpgrade(t *testing.T) {
 		},
 	}
 	e = transformer.NormalizeResourcesForK8sMasterUpgrade(logger, templateMap, false, nil)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "TestNormalizeResourcesForK8sMasterOnlyUpgrade")
 }
 
 func TestRemoveKMSResourcesFromTemplate(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "TestNormalizeResourcesForK8sMasterOnlyUpgrade")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_template_kms.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_template_kms_upgrade.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := &Transformer{
 		Translator: &i18n.Translator{
@@ -146,21 +146,21 @@ func TestRemoveKMSResourcesFromTemplate(t *testing.T) {
 		},
 	}
 	e = transformer.RemoveKMSResourcesFromTemplate(logger, templateMap)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "TestRemoveKMSResourcesFromTemplate")
 }
 
 func TestNormalizeResourcesForK8sAgentUpgrade(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "TestNormalizeResourcesForK8sAgentUpgrade")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_agent_upgrade_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := &Transformer{
 		Translator: &i18n.Translator{
@@ -171,66 +171,66 @@ func TestNormalizeResourcesForK8sAgentUpgrade(t *testing.T) {
 	agentsToKeepMap["agentppol1"] = true // keep the typo or update the templates in ./transformtestfiles
 	agentsToKeepMap["agentpool2"] = false
 	e = transformer.NormalizeResourcesForK8sAgentUpgrade(logger, templateMap, false, agentsToKeepMap)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "TestNormalizeResourcesForK8sAgentUpgrade")
 }
 
 func TestNormalizeForK8sSLBScalingOrUpgrade(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "NormalizeForK8sSLBScalingOrUpgrade")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_slb_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_slb_scale_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := Transformer{}
 	e = transformer.NormalizeForK8sSLBScalingOrUpgrade(logger, templateMap)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "TestNormalizeForK8sSLBScalingOrUpgrade")
 }
 
 func TestNormalizeForK8sSLBScalingOrUpgradeVMSS(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "NormalizeForK8sSLBScalingOrUpgrade")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_slb_vmss_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_slb_vmss_scale_template.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := Transformer{}
 	e = transformer.NormalizeForK8sSLBScalingOrUpgrade(logger, templateMap)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "TestNormalizeForK8sSLBScalingOrUpgradeVMSS")
 }
 
 func TestRemoveJumpboxResourcesFromTemplate(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "RemoveJumpboxResourcesFromTemplate")
 	fileContents, e := os.ReadFile("./transformtestfiles/k8s_template_jumpbox.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	expectedFileContents, e := os.ReadFile("./transformtestfiles/k8s_upgrade_template_jumpbox.json")
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	templateJSON := string(fileContents)
 	var template interface{}
 	e = json.Unmarshal([]byte(templateJSON), &template)
-	Expect(e).NotTo(HaveOccurred())
+	gomega.Expect(e).NotTo(gomega.HaveOccurred())
 	templateMap := template.(map[string]interface{})
 	transformer := Transformer{}
 	e = transformer.RemoveJumpboxResourcesFromTemplate(logger, templateMap)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	ValidateTemplate(templateMap, expectedFileContents, "TestRemoveJumpboxResourcesFromTemplate")
 }
 
 func TestNormalizeForK8sVMASScalingUp_ShouldRemoveVMAS(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "TestNormalizeForK8sVMASScalingUp")
 	vmasMap := map[string]interface{}{
 		"apiVersion": "[variables('apiVersionStorageManagedDisks')]",
@@ -253,13 +253,13 @@ func TestNormalizeForK8sVMASScalingUp_ShouldRemoveVMAS(t *testing.T) {
 	}
 	transformer := Transformer{}
 	e := transformer.NormalizeForK8sVMASScalingUp(logger, resources)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	transformedResources := resources["resources"].([]interface{})
-	Expect(transformedResources).To(BeEmpty())
+	gomega.Expect(transformedResources).To(gomega.BeEmpty())
 }
 
 func TestRemoveImmutableFields(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 	logger := logrus.New().WithField("testName", "TestNormalizeForK8sVMASScalingUp")
 	vmasMap := map[string]interface{}{
 		"apiVersion": "[variables('apiVersionStorageManagedDisks')]",
@@ -294,31 +294,31 @@ func TestRemoveImmutableFields(t *testing.T) {
 	transformer := Transformer{}
 	transformer.RemoveImmutableResourceProperties(logger, resources)
 	transformedResources := resources["resources"].([]interface{})
-	Expect(transformedResources).ToNot(BeEmpty())
+	gomega.Expect(transformedResources).ToNot(gomega.BeEmpty())
 	transformedVmss := transformedResources[0].(map[string]interface{})
 	transformedVmas := transformedResources[1].(map[string]interface{})
-	Expect(transformedVmss["properties"]).ToNot(HaveKey("platformFaultDomainCount"))
-	Expect(transformedVmss["properties"]).ToNot(HaveKey("singlePlacementGroup"))
-	Expect(transformedVmas["properties"]).ToNot(HaveKey("singlePlacementGroup"))
-	Expect(transformedVmas["properties"]).ToNot(HaveKey("proximityPlacementGroup"))
+	gomega.Expect(transformedVmss["properties"]).ToNot(gomega.HaveKey("platformFaultDomainCount"))
+	gomega.Expect(transformedVmss["properties"]).ToNot(gomega.HaveKey("singlePlacementGroup"))
+	gomega.Expect(transformedVmas["properties"]).ToNot(gomega.HaveKey("singlePlacementGroup"))
+	gomega.Expect(transformedVmas["properties"]).ToNot(gomega.HaveKey("proximityPlacementGroup"))
 }
 
 func ValidateTemplate(templateMap map[string]interface{}, expectedFileContents []byte, testFileName string) {
 	output, e := helpers.JSONMarshal(templateMap, false)
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	prettyOutput, e := PrettyPrintArmTemplate(string(output))
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	prettyExpectedOutput, e := PrettyPrintArmTemplate(string(expectedFileContents))
-	Expect(e).To(BeNil())
+	gomega.Expect(e).To(gomega.BeNil())
 	if prettyOutput != prettyExpectedOutput {
 		err := os.WriteFile(fmt.Sprintf("./transformtestfiles/%s.failure.json", testFileName), []byte(prettyOutput), 0600)
-		Expect(err).NotTo(HaveOccurred())
+		gomega.Expect(err).NotTo(gomega.HaveOccurred())
 	}
-	Expect(prettyOutput).To(Equal(prettyExpectedOutput))
+	gomega.Expect(prettyOutput).To(gomega.Equal(prettyExpectedOutput))
 }
 
 func TestRemoveSingleOfType(t *testing.T) {
-	g := NewGomegaWithT(t)
+	g := gomega.NewGomegaWithT(t)
 	l := logrus.New().WithField("testName", "TestRemoveSingleOfType")
 
 	cases := []struct {
@@ -374,16 +374,16 @@ func TestRemoveSingleOfType(t *testing.T) {
 
 			err := removeSingleOfType(l, template, c.toRemove)
 			if c.expectedErr == nil {
-				g.Expect(err).To(BeNil())
+				g.Expect(err).To(gomega.BeNil())
 				for _, r := range template[resourcesFieldName].([]interface{}) {
 					resource, _ := r.(map[string]interface{})
 					resourceType, _ := resource[typeFieldName].(string)
-					g.Expect(resourceType).To(Not(Equal(c.toRemove)))
+					g.Expect(resourceType).To(gomega.Not(gomega.Equal(c.toRemove)))
 					deps, _ := resource[dependsOnFieldName].([]interface{})
-					g.Expect(fmt.Sprint(deps)).To(Equal(fmt.Sprint(c.expectedDeps)))
+					g.Expect(fmt.Sprint(deps)).To(gomega.Equal(fmt.Sprint(c.expectedDeps)))
 				}
 			} else {
-				g.Expect(err.Error()).To(Equal(c.expectedErr.Error()))
+				g.Expect(err.Error()).To(gomega.Equal(c.expectedErr.Error()))
 			}
 		})
 	}

@@ -8,11 +8,11 @@ import (
 	"testing"
 
 	"github.com/Jeffail/gabs"
-	. "github.com/onsi/gomega"
+	"github.com/onsi/gomega"
 )
 
 func TestAPIModelMergerMapValues(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 
 	m := make(map[string]APIModelValue)
 	values := []string{
@@ -24,24 +24,24 @@ func TestAPIModelMergerMapValues(t *testing.T) {
 	}
 
 	MapValues(m, values)
-	Expect(m["masterProfile.count"].value).To(BeIdenticalTo(int64(5)))
-	Expect(m["agentPoolProfiles[0].name"].arrayValue).To(BeTrue())
-	Expect(m["agentPoolProfiles[0].name"].arrayIndex).To(BeIdenticalTo(0))
-	Expect(m["agentPoolProfiles[0].name"].arrayProperty).To(BeIdenticalTo("name"))
-	Expect(m["agentPoolProfiles[0].name"].arrayName).To(BeIdenticalTo("agentPoolProfiles"))
-	Expect(m["agentPoolProfiles[0].name"].value).To(BeIdenticalTo("agentpool1"))
-	Expect(m["linuxProfile.adminUsername"].value).To(BeIdenticalTo("admin"))
-	Expect(m["servicePrincipalProfile.secret"].value).To(BeIdenticalTo("=!,Test$^="))
-	Expect(m["servicePrincipalProfile.clientId"].value).To(BeIdenticalTo("123a1238-c6eb-4b61-9d6f-7db6f1e14123"))
-	Expect(m["certificateProfile.etcdPeerCertificates[0]"].arrayValue).To(BeTrue())
-	Expect(m["certificateProfile.etcdPeerCertificates[0]"].arrayIndex).To(BeIdenticalTo(0))
-	Expect(m["certificateProfile.etcdPeerCertificates[0]"].arrayProperty).To(BeEmpty())
-	Expect(m["certificateProfile.etcdPeerCertificates[0]"].arrayName).To(BeIdenticalTo("certificateProfile.etcdPeerCertificates"))
-	Expect(m["certificateProfile.etcdPeerCertificates[0]"].value).To(BeIdenticalTo("certificate-value"))
+	gomega.Expect(m["masterProfile.count"].value).To(gomega.BeIdenticalTo(int64(5)))
+	gomega.Expect(m["agentPoolProfiles[0].name"].arrayValue).To(gomega.BeTrue())
+	gomega.Expect(m["agentPoolProfiles[0].name"].arrayIndex).To(gomega.BeIdenticalTo(0))
+	gomega.Expect(m["agentPoolProfiles[0].name"].arrayProperty).To(gomega.BeIdenticalTo("name"))
+	gomega.Expect(m["agentPoolProfiles[0].name"].arrayName).To(gomega.BeIdenticalTo("agentPoolProfiles"))
+	gomega.Expect(m["agentPoolProfiles[0].name"].value).To(gomega.BeIdenticalTo("agentpool1"))
+	gomega.Expect(m["linuxProfile.adminUsername"].value).To(gomega.BeIdenticalTo("admin"))
+	gomega.Expect(m["servicePrincipalProfile.secret"].value).To(gomega.BeIdenticalTo("=!,Test$^="))
+	gomega.Expect(m["servicePrincipalProfile.clientId"].value).To(gomega.BeIdenticalTo("123a1238-c6eb-4b61-9d6f-7db6f1e14123"))
+	gomega.Expect(m["certificateProfile.etcdPeerCertificates[0]"].arrayValue).To(gomega.BeTrue())
+	gomega.Expect(m["certificateProfile.etcdPeerCertificates[0]"].arrayIndex).To(gomega.BeIdenticalTo(0))
+	gomega.Expect(m["certificateProfile.etcdPeerCertificates[0]"].arrayProperty).To(gomega.BeEmpty())
+	gomega.Expect(m["certificateProfile.etcdPeerCertificates[0]"].arrayName).To(gomega.BeIdenticalTo("certificateProfile.etcdPeerCertificates"))
+	gomega.Expect(m["certificateProfile.etcdPeerCertificates[0]"].value).To(gomega.BeIdenticalTo("certificate-value"))
 }
 
 func TestMergeValuesWithAPIModel(t *testing.T) {
-	RegisterTestingT(t)
+	gomega.RegisterTestingT(t)
 
 	m := make(map[string]APIModelValue)
 	values := []string{
@@ -55,20 +55,20 @@ func TestMergeValuesWithAPIModel(t *testing.T) {
 	tmpFile, _ := MergeValuesWithAPIModel("../testdata/simple/kubernetes.json", m)
 
 	jsonFileContent, err := os.ReadFile(tmpFile)
-	Expect(err).To(BeNil())
+	gomega.Expect(err).To(gomega.BeNil())
 
 	jsonAPIModel, err := gabs.ParseJSON(jsonFileContent)
-	Expect(err).To(BeNil())
+	gomega.Expect(err).To(gomega.BeNil())
 
 	masterProfileCount := jsonAPIModel.Path("properties.masterProfile.count").Data()
-	Expect(masterProfileCount).To(BeIdenticalTo(float64(5)))
+	gomega.Expect(masterProfileCount).To(gomega.BeIdenticalTo(float64(5)))
 
 	adminUsername := jsonAPIModel.Path("properties.linuxProfile.adminUsername").Data()
-	Expect(adminUsername).To(BeIdenticalTo("admin"))
+	gomega.Expect(adminUsername).To(gomega.BeIdenticalTo("admin"))
 
 	agentPoolProfileName := jsonAPIModel.Path("properties.agentPoolProfiles").Index(0).Path("name").Data().(string)
-	Expect(agentPoolProfileName).To(BeIdenticalTo("agentpool1"))
+	gomega.Expect(agentPoolProfileName).To(gomega.BeIdenticalTo("agentpool1"))
 
 	etcdPeerCertificates := jsonAPIModel.Path("properties.certificateProfile.etcdPeerCertificates").Index(0).Data()
-	Expect(etcdPeerCertificates).To(BeIdenticalTo("certificate-value"))
+	gomega.Expect(etcdPeerCertificates).To(gomega.BeIdenticalTo("certificate-value"))
 }

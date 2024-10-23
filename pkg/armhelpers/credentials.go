@@ -16,7 +16,7 @@ import (
 )
 
 // NewDefaultCredential returns an AzureClient
-func NewDefaultCredential(cloud cloud.Configuration, subscriptionID string) (*azidentity.DefaultAzureCredential, error) {
+func NewDefaultCredential(cloud cloud.Configuration, _ string) (*azidentity.DefaultAzureCredential, error) {
 	options := &azidentity.DefaultAzureCredentialOptions{
 		ClientOptions: policy.ClientOptions{
 			Cloud: cloud,
@@ -49,7 +49,7 @@ func NewClientSecretCredential(cloud cloud.Configuration, subscriptionID, client
 }
 
 // NewClientSecretCredentialExternalTenant returns an AzureClient via client_id and client_secret from a tenant
-func NewClientSecretCredentialExternalTenant(cloud cloud.Configuration, subscriptionID, clientID, clientSecret string) (*azidentity.ClientSecretCredential, error) {
+func NewClientSecretCredentialExternalTenant(cloud cloud.Configuration, _, clientID, clientSecret string) (*azidentity.ClientSecretCredential, error) {
 	options := &azidentity.ClientSecretCredentialOptions{
 		DisableInstanceDiscovery: true,
 		ClientOptions: policy.ClientOptions{
@@ -96,7 +96,7 @@ func NewClientCertificateCredential(cloud cloud.Configuration, subscriptionID, c
 }
 
 // NewClientCertificateCredentialExternalTenant returns an AzureClient via client_id and jwt certificate assertion a 3rd party tenant
-func NewClientCertificateCredentialExternalTenant(cloud cloud.Configuration, subscriptionID, clientID, certificatePath, privateKeyPath string) (*azidentity.ClientCertificateCredential, error) {
+func NewClientCertificateCredentialExternalTenant(cloud cloud.Configuration, _, clientID, certificatePath, privateKeyPath string) (*azidentity.ClientCertificateCredential, error) {
 	certificateData, err := os.ReadFile(certificatePath)
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to read certificate")

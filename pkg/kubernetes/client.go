@@ -227,18 +227,18 @@ func (c *ClientSetClient) WaitForDelete(logger *log.Entry, pods []v1.Pod, usingE
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), c.timeout)
 	defer cancel()
-	err := wait.PollUntilContextCancel(ctx, c.interval, true, func(ctx context.Context) (bool, error) {
+	err := wait.PollUntilContextCancel(ctx, c.interval, true, func(_ context.Context) (bool, error) {
 		pendingPods := []v1.Pod{}
 		for i, pod := range pods {
 			p, err := c.getPod(pod.Namespace, pod.Name)
 			if apierrors.IsNotFound(err) || (p != nil && p.ObjectMeta.UID != pod.ObjectMeta.UID) {
 				logger.Infof("%s pod successfully %s", pod.Name, verbStr)
 				continue
-			} else if err != nil {
-				return false, err
-			} else {
-				pendingPods = append(pendingPods, pods[i])
 			}
+			if err != nil {
+				return false, err
+			}
+			pendingPods = append(pendingPods, pods[i])
 		}
 		pods = pendingPods
 		if len(pendingPods) > 0 {

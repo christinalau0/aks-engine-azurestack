@@ -95,7 +95,7 @@ type MockKubernetesClient struct {
 }
 
 // ListPods returns Pods running on the passed in node
-func (mkc *MockKubernetesClient) ListPods(node *v1.Node) (*v1.PodList, error) {
+func (mkc *MockKubernetesClient) ListPods(_ *v1.Node) (*v1.PodList, error) {
 	if mkc.FailListPods {
 		return nil, errors.New("ListPods failed")
 	}
@@ -136,7 +136,7 @@ func (mkc *MockKubernetesClient) ListNodes() (*v1.NodeList, error) {
 }
 
 // ListNodesByOptions returns a list of Nodes registered in the api server
-func (mkc *MockKubernetesClient) ListNodesByOptions(opts metav1.ListOptions) (*v1.NodeList, error) {
+func (mkc *MockKubernetesClient) ListNodesByOptions(_ metav1.ListOptions) (*v1.NodeList, error) {
 	return &v1.NodeList{}, nil
 }
 
@@ -161,7 +161,7 @@ func (mkc *MockKubernetesClient) ListServiceAccounts(namespace string) (*v1.Serv
 }
 
 // ListPodSecurityPolices returns the list of Pod Security Policies
-func (mkc *MockKubernetesClient) ListPodSecurityPolices(opts metav1.ListOptions) (*policyv1beta1.PodSecurityPolicyList, error) {
+func (mkc *MockKubernetesClient) ListPodSecurityPolices(_ metav1.ListOptions) (*policyv1beta1.PodSecurityPolicyList, error) {
 	if mkc.FailListPodSecurityPolicy {
 		return nil, errors.New("ListPodSecurityPolices failed")
 	}
@@ -204,7 +204,7 @@ func (mkc *MockKubernetesClient) UpdateNode(node *v1.Node) (*v1.Node, error) {
 }
 
 // DeleteNode deregisters node in the api server
-func (mkc *MockKubernetesClient) DeleteNode(name string) error {
+func (mkc *MockKubernetesClient) DeleteNode(_ string) error {
 	if mkc.FailDeleteNode {
 		return errors.New("DeleteNode failed")
 	}
@@ -212,7 +212,7 @@ func (mkc *MockKubernetesClient) DeleteNode(name string) error {
 }
 
 // DeleteServiceAccount deletes the provided service account
-func (mkc *MockKubernetesClient) DeleteServiceAccount(sa *v1.ServiceAccount) error {
+func (mkc *MockKubernetesClient) DeleteServiceAccount(_ *v1.ServiceAccount) error {
 	if mkc.FailDeleteServiceAccount {
 		return errors.New("DeleteServiceAccount failed")
 	}
@@ -231,7 +231,7 @@ func (mkc *MockKubernetesClient) SupportEviction() (string, error) {
 }
 
 // DeleteDeployment deletes the passed in daemonset
-func (mkc *MockKubernetesClient) DeleteClusterRole(role *rbacv1.ClusterRole) error {
+func (mkc *MockKubernetesClient) DeleteClusterRole(_ *rbacv1.ClusterRole) error {
 	if mkc.FailDeleteClusterRole {
 		return errors.New("ClusterRole failed")
 	}
@@ -239,7 +239,7 @@ func (mkc *MockKubernetesClient) DeleteClusterRole(role *rbacv1.ClusterRole) err
 }
 
 // DeleteDaemonSet deletes the passed in daemonset
-func (mkc *MockKubernetesClient) DeleteDaemonSet(pod *appsv1.DaemonSet) error {
+func (mkc *MockKubernetesClient) DeleteDaemonSet(_ *appsv1.DaemonSet) error {
 	if mkc.FailDeleteDaemonSet {
 		return errors.New("DaemonSet failed")
 	}
@@ -247,7 +247,7 @@ func (mkc *MockKubernetesClient) DeleteDaemonSet(pod *appsv1.DaemonSet) error {
 }
 
 // DeleteDeployment deletes the passed in daemonset
-func (mkc *MockKubernetesClient) DeleteDeployment(pod *appsv1.Deployment) error {
+func (mkc *MockKubernetesClient) DeleteDeployment(_ *appsv1.Deployment) error {
 	if mkc.FailDeleteDeployment {
 		return errors.New("deployment failed")
 	}
@@ -255,7 +255,7 @@ func (mkc *MockKubernetesClient) DeleteDeployment(pod *appsv1.Deployment) error 
 }
 
 // DeletePod deletes the passed in pod
-func (mkc *MockKubernetesClient) DeletePod(pod *v1.Pod) error {
+func (mkc *MockKubernetesClient) DeletePod(_ *v1.Pod) error {
 	if mkc.FailDeletePod {
 		return errors.New("DeletePod failed")
 	}
@@ -263,7 +263,7 @@ func (mkc *MockKubernetesClient) DeletePod(pod *v1.Pod) error {
 }
 
 // EvictPod evicts the passed in pod using the passed in api version
-func (mkc *MockKubernetesClient) EvictPod(pod *v1.Pod, policyGroupVersion string) error {
+func (mkc *MockKubernetesClient) EvictPod(_ *v1.Pod, _ string) error {
 	if mkc.FailEvictPod {
 		return errors.New("EvictPod failed")
 	}
@@ -271,7 +271,7 @@ func (mkc *MockKubernetesClient) EvictPod(pod *v1.Pod, policyGroupVersion string
 }
 
 // WaitForDelete waits until all pods are deleted. Returns all pods not deleted and an error on failure
-func (mkc *MockKubernetesClient) WaitForDelete(logger *log.Entry, pods []v1.Pod, usingEviction bool) ([]v1.Pod, error) {
+func (mkc *MockKubernetesClient) WaitForDelete(_ *log.Entry, _ []v1.Pod, _ bool) ([]v1.Pod, error) {
 	if mkc.FailWaitForDelete {
 		return nil, errors.New("WaitForDelete failed")
 	}
@@ -279,14 +279,14 @@ func (mkc *MockKubernetesClient) WaitForDelete(logger *log.Entry, pods []v1.Pod,
 }
 
 // DaemonSet returns a given daemonset in a namespace.
-func (mkc *MockKubernetesClient) GetDaemonSet(namespace, name string) (*appsv1.DaemonSet, error) {
+func (mkc *MockKubernetesClient) GetDaemonSet(_, _ string) (*appsv1.DaemonSet, error) {
 	return &appsv1.DaemonSet{
 		Spec: appsv1.DaemonSetSpec{},
 	}, nil
 }
 
 // GetDeployment returns a given deployment in a namespace.
-func (mkc *MockKubernetesClient) GetDeployment(namespace, name string) (*appsv1.Deployment, error) {
+func (mkc *MockKubernetesClient) GetDeployment(_, _ string) (*appsv1.Deployment, error) {
 	if mkc.FailGetDeploymentCount > 0 {
 		mkc.FailGetDeploymentCount--
 		return nil, errors.New("GetDeployment failed")
@@ -300,7 +300,7 @@ func (mkc *MockKubernetesClient) GetDeployment(namespace, name string) (*appsv1.
 }
 
 // UpdateDeployment updates a deployment to match the given specification.
-func (mkc *MockKubernetesClient) UpdateDeployment(namespace string, deployment *appsv1.Deployment) (*appsv1.Deployment, error) {
+func (mkc *MockKubernetesClient) UpdateDeployment(_ string, _ *appsv1.Deployment) (*appsv1.Deployment, error) {
 	if mkc.FailUpdateDeploymentCount > 0 {
 		mkc.FailUpdateDeploymentCount--
 		return nil, errors.New("UpdateDeployment failed")
@@ -309,15 +309,15 @@ func (mkc *MockKubernetesClient) UpdateDeployment(namespace string, deployment *
 }
 
 // DeleteBlob mock
-func (msc *MockStorageClient) DeleteBlob(container, blob string, options *azStorage.DeleteBlobOptions) error {
+func (msc *MockStorageClient) DeleteBlob(_, _ string, _ *azStorage.DeleteBlobOptions) error {
 	return nil
 }
 
 // AddAcceptLanguages mock
-func (mc *MockAKSEngineClient) AddAcceptLanguages(languages []string) {}
+func (mc *MockAKSEngineClient) AddAcceptLanguages(_ []string) {}
 
 // DeployTemplate mock
-func (mc *MockAKSEngineClient) DeployTemplate(ctx context.Context, resourceGroup, name string, template, parameters map[string]interface{}) (resources.DeploymentExtended, error) {
+func (mc *MockAKSEngineClient) DeployTemplate(_ context.Context, _, name string, template, parameters map[string]interface{}) (resources.DeploymentExtended, error) {
 	switch {
 	case mc.FailDeployTemplate:
 		return resources.DeploymentExtended{}, errors.New("DeployTemplate failed")

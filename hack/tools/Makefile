@@ -78,9 +78,9 @@ azure-cli:
 kubectl:
 	curl -LO https://dl.k8s.io/release/$(KUBECTL_VERSION)/bin/linux/amd64/kubectl
 	install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+	install -o root -g root -m 0755 kubectl /usr/local/bin/k
 	kubectl version --client
-	curl -o /usr/local/bin/k https://raw.githubusercontent.com/jakepearson/k/master/k
-	chmod +x /usr/local/bin/k
+	k version --client
 
 azcopy:
 	curl -sSL https://aka.ms/downloadazcopy-v10-linux | tar -vxz -C $(LOCALBIN) --strip=1

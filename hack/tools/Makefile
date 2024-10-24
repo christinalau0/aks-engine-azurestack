@@ -78,6 +78,7 @@ azure-cli:
 kubectl:
 	curl -LO https://dl.k8s.io/release/$(KUBECTL_VERSION)/bin/linux/amd64/kubectl
 	install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+	kubectl version --client
 	curl -o /usr/local/bin/k https://raw.githubusercontent.com/jakepearson/k/master/k
 	chmod +x /usr/local/bin/k
 

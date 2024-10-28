@@ -78,7 +78,7 @@ function rotateCertificates {
     -e REGION=${REGION} \
     -e RESOURCE_GROUP=${RESOURCE_GROUP} \
     ${DEV_IMAGE} \
-    ./bin/aks-engine-azurestack rotate-certs \
+    make bootstrap && ./bin/aks-engine-azurestack rotate-certs \
     --api-model _output/${RESOURCE_GROUP}/apimodel.json \
     --ssh-host ${API_SERVER} \
     --location ${REGION} \
@@ -99,7 +99,7 @@ function rotateCertificates {
       -w ${WORK_DIR} \
       -e RESOURCE_GROUP=$RESOURCE_GROUP \
       ${DEV_IMAGE} \
-      /bin/bash -c "jq '.properties.certificateProfile' _output/${RESOURCE_GROUP}/_rotate_certs_output/apimodel.json > _output/${RESOURCE_GROUP}/certificateProfile.json" || exit 1
+      /bin/bash -c "make bootstrap && jq '.properties.certificateProfile' _output/${RESOURCE_GROUP}/_rotate_certs_output/apimodel.json > _output/${RESOURCE_GROUP}/certificateProfile.json" || exit 1
 
     docker run --rm \
       -v $(pwd):${WORK_DIR} \
@@ -108,7 +108,7 @@ function rotateCertificates {
       -e REGION=${REGION} \
       -e RESOURCE_GROUP=${RESOURCE_GROUP} \
       ${DEV_IMAGE} \
-      ./bin/aks-engine-azurestack rotate-certs \
+      make bootstrap && ./bin/aks-engine-azurestack rotate-certs \
       --api-model _output/${RESOURCE_GROUP}/apimodel.json \
       --ssh-host ${API_SERVER} \
       --location ${REGION} \
@@ -281,7 +281,7 @@ if [ "${UPGRADE_CLUSTER}" = "true" ] || [ "${SCALE_CLUSTER}" = "true" ] || [ -n 
       -e RESOURCE_GROUP=$RESOURCE_GROUP \
       -e REGION=$REGION \
       ${DEV_IMAGE} \
-      ./bin/aks-engine-azurestack get-logs \
+      make bootstrap && ./bin/aks-engine-azurestack get-logs \
       --api-model _output/$RESOURCE_GROUP/apimodel.json \
       --location $REGION \
       --ssh-host $API_SERVER \
@@ -403,7 +403,7 @@ if [ -n "$ADD_NODE_POOL_INPUT" ]; then
       -e RESOURCE_GROUP=$RESOURCE_GROUP \
       -e REGION=$REGION \
       ${DEV_IMAGE} \
-      ./bin/aks-engine-azurestack addpool \
+      make bootstrap && ./bin/aks-engine-azurestack addpool \
       --azure-env ${AZURE_ENV} \
       --subscription-id ${AZURE_SUBSCRIPTION_ID} \
       --api-model _output/$RESOURCE_GROUP/apimodel.json \
@@ -481,41 +481,6 @@ if [ "${SCALE_CLUSTER}" = "true" ]; then
   nodepoolcount=$(jq '.properties.agentPoolProfiles| length' < _output/$RESOURCE_GROUP/apimodel.json)
   for ((i = 0; i < $nodepoolcount; ++i)); do
     nodepool=$(jq -r --arg i $i '. | .properties.agentPoolProfiles[$i | tonumber].name' < _output/$RESOURCE_GROUP/apimodel.json)
-    if [ "${UPDATE_NODE_POOLS}" = "true" ]; then
-      # modify the master VM SKU to simulate vertical vm scaling via upgrade
-      docker run --rm \
-        -v $(pwd):${WORK_DIR} \
-        -w ${WORK_DIR} \
-        -e RESOURCE_GROUP=$RESOURCE_GROUP \
-        -e NODE_VM_UPGRADE_SKU=$NODE_VM_UPGRADE_SKU \
-        ${DEV_IMAGE} \
-        /bin/bash -c "jq --arg sku \"$NODE_VM_UPGRADE_SKU\" --arg i $i '. | .properties.agentPoolProfiles[$i | tonumber].vmSize = \$sku' < _output/$RESOURCE_GROUP/apimodel.json > _output/$RESOURCE_GROUP/apimodel-update.json" || exit 1
-      docker run --rm \
-        -v $(pwd):${WORK_DIR} \
-        -w ${WORK_DIR} \
-        -e RESOURCE_GROUP=$RESOURCE_GROUP \
-        ${DEV_IMAGE} \
-        /bin/bash -c "mv _output/$RESOURCE_GROUP/apimodel-update.json _output/$RESOURCE_GROUP/apimodel.json" || exit 1
-      docker run --rm \
-        -v $(pwd):${WORK_DIR} \
-        -v /etc/ssl/certs:/etc/ssl/certs \
-        -w ${WORK_DIR} \
-        -e RESOURCE_GROUP=$RESOURCE_GROUP \
-        -e REGION=$REGION \
-        -e UPDATE_POOL_NAME=$UPDATE_POOL_NAME \
-        ${DEV_IMAGE} \
-        ./bin/aks-engine-azurestack update \
-        --azure-env ${AZURE_ENV} \
-        --subscription-id ${AZURE_SUBSCRIPTION_ID} \
-        --api-model _output/$RESOURCE_GROUP/apimodel.json \
-        --node-pool $nodepool \
-        --location $REGION \
-        --resource-group $RESOURCE_GROUP \
-        --auth-method client_secret \
-        --client-id ${AZURE_CLIENT_ID} \
-        --client-secret ${AZURE_CLIENT_SECRET} || exit 1
-      az vmss list -g $RESOURCE_GROUP --subscription ${AZURE_SUBSCRIPTION_ID} --query '[].sku' | grep $NODE_VM_UPGRADE_SKU || exit 1
-    fi
     docker run --rm \
       -v $(pwd):${WORK_DIR} \
       -v /etc/ssl/certs:/etc/ssl/certs \
@@ -523,7 +488,7 @@ if [ "${SCALE_CLUSTER}" = "true" ]; then
       -e RESOURCE_GROUP=$RESOURCE_GROUP \
       -e REGION=$REGION \
       ${DEV_IMAGE} \
-      ./bin/aks-engine-azurestack scale \
+      make bootstrap && ./bin/aks-engine-azurestack scale \
       --azure-env ${AZURE_ENV} \
       --subscription-id ${AZURE_SUBSCRIPTION_ID} \
       --api-model _output/$RESOURCE_GROUP/apimodel.json \
@@ -603,7 +568,7 @@ if [ "${UPGRADE_CLUSTER}" = "true" ]; then
       -e RESOURCE_GROUP=$RESOURCE_GROUP \
       -e MASTER_VM_UPGRADE_SKU=$MASTER_VM_UPGRADE_SKU \
       ${DEV_IMAGE} \
-      /bin/bash -c "jq --arg sku \"$MASTER_VM_UPGRADE_SKU\" '. | .properties.masterProfile.vmSize = \$sku' < _output/$RESOURCE_GROUP/apimodel.json > _output/$RESOURCE_GROUP/apimodel-upgrade.json" || exit 1
+      /bin/bash -c "make bootstrap && jq --arg sku \"$MASTER_VM_UPGRADE_SKU\" '. | .properties.masterProfile.vmSize = \$sku' < _output/$RESOURCE_GROUP/apimodel.json > _output/$RESOURCE_GROUP/apimodel-upgrade.json" || exit 1
   docker run --rm \
       -v $(pwd):${WORK_DIR} \
       -w ${WORK_DIR} \
@@ -618,7 +583,7 @@ if [ "${UPGRADE_CLUSTER}" = "true" ]; then
       -e RESOURCE_GROUP=$RESOURCE_GROUP \
       -e REGION=$REGION \
       ${DEV_IMAGE} \
-      ./bin/aks-engine-azurestack upgrade --force \
+      make bootstrap && ./bin/aks-engine-azurestack upgrade --force \
       --azure-env ${AZURE_ENV} \
       --subscription-id ${AZURE_SUBSCRIPTION_ID} \
       --api-model _output/$RESOURCE_GROUP/apimodel.json \
@@ -698,7 +663,7 @@ if [ "${SCALE_CLUSTER}" = "true" ]; then
     -e RESOURCE_GROUP=$RESOURCE_GROUP \
     -e REGION=$REGION \
     ${DEV_IMAGE} \
-    ./bin/aks-engine-azurestack scale \
+    make bootstrap && ./bin/aks-engine-azurestack scale \
     --azure-env ${AZURE_ENV} \
     --subscription-id ${AZURE_SUBSCRIPTION_ID} \
     --api-model _output/$RESOURCE_GROUP/apimodel.json \

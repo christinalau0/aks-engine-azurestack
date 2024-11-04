@@ -855,7 +855,7 @@ func getK8sVersionComponents(version, kubernetesImageBaseType string, overrides 
 			common.KubeProxyAddonName:                     getDefaultImage(common.KubeProxyAddonName, kubernetesImageBaseType) + ":v" + version,
 			common.SchedulerComponentName:                 getDefaultImage(common.SchedulerComponentName, kubernetesImageBaseType) + ":v" + version,
 			common.CloudControllerManagerComponentName:    "oss/kubernetes/azure-cloud-controller-manager:v1.29.8",
-			common.CloudNodeManagerAddonName:              "oss/kubernetes/azure-cloud-node-manager:v1.29.9",
+			common.CloudNodeManagerAddonName:              "oss/kubernetes/azure-cloud-node-manager:v1.28.5",
 			common.WindowsArtifactComponentName:           "v" + version + "/windowszip/v" + version + "-1int.zip",
 			common.WindowsArtifactAzureStackComponentName: "v" + version + "/windowszip/v" + version + "-1int.zip",
 			common.DashboardAddonName:                     dashboardImageReference,

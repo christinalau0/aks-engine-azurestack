@@ -11676,8 +11676,7 @@ spec:
             memory: 512Mi
         {{- if IsAzureStackCloud}}
         securityContext:
-          runAsUser: 0
-          runAsGroup: 0
+          privileged: true
         volumeMounts:
         - name: etc-kubernetes
           mountPath: /etc/kubernetes

@@ -11665,7 +11665,7 @@ spec:
         - name: AZURE_ENVIRONMENT_FILEPATH
           value: /etc/kubernetes/azurestackcloud.json
         - name: AZURE_GO_SDK_LOG_LEVEL
-          value: INFO
+          value: DEBUG
         {{end}}
         resources:
           requests:
@@ -11675,6 +11675,10 @@ spec:
             cpu: 2000m
             memory: 512Mi
         {{- if IsAzureStackCloud}}
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+          allowPrivilegeEscalation: true
         volumeMounts:
         - name: etc-kubernetes
           mountPath: /etc/kubernetes

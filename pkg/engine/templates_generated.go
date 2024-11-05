@@ -11665,7 +11665,7 @@ spec:
         - name: AZURE_ENVIRONMENT_FILEPATH
           value: /etc/kubernetes/azurestackcloud.json
         - name: AZURE_GO_SDK_LOG_LEVEL
-          value: DEBUG
+          value: INFO
         {{end}}
         resources:
           requests:
@@ -11678,7 +11678,6 @@ spec:
         securityContext:
           runAsUser: 0
           runAsGroup: 0
-          allowPrivilegeEscalation: true
         volumeMounts:
         - name: etc-kubernetes
           mountPath: /etc/kubernetes
@@ -11729,6 +11728,10 @@ spec:
     spec:
       priorityClassName: system-node-critical
       serviceAccountName: cloud-node-manager
+      securityContext:
+        windowsOptions:
+          hostProcess: true
+          runAsUserName: "NT AUTHORITY\\system"
       nodeSelector:
         kubernetes.io/os: windows
       tolerations:

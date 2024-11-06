@@ -11728,6 +11728,9 @@ spec:
     spec:
       priorityClassName: system-node-critical
       serviceAccountName: cloud-node-manager
+      securityContext:
+        windowsOptions:
+          runAsUserName: "NT AUTHORITY\\system"
       nodeSelector:
         kubernetes.io/os: windows
       tolerations:

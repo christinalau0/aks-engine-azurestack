@@ -187,6 +187,16 @@ type DeploymentARM struct {
 	resources.DeploymentExtended
 }
 
+// MarshalJSON is the custom marshaler for DeploymentARM.
+func (deploymentarm DeploymentARM) MarshalJSON() ([]byte, error) {
+	type DeploymentARMAlias DeploymentARM
+	return json.Marshal(&struct {
+		DeploymentARMAlias
+	}{
+		DeploymentARMAlias: (DeploymentARMAlias)(deploymentarm),
+	})
+}
+
 // TODO: Should we skip this type and add the `ResourceGroup` field directly to `DeploymentARM` ?
 // DeploymentWithResourceGroupARM is like `DeploymentARM` but includes `ResourceGroup`.
 type DeploymentWithResourceGroupARM struct {

@@ -183,9 +183,9 @@ type ImageARM struct {
 
 // DeploymentARM embeds the ARMResource type in resources.DeploymentExtended.
 type DeploymentARM struct {
-	DeploymentARMResource
+	ARMResource
 	resources.DeploymentExtended
-}
+  }
 
 // TODO: Should we skip this type and add the `ResourceGroup` field directly to `DeploymentARM` ?
 // DeploymentWithResourceGroupARM is like `DeploymentARM` but includes `ResourceGroup`.

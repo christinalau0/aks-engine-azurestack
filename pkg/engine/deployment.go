@@ -19,12 +19,10 @@ func createAzureStackTelemetry(azureTelemetryPID string) DeploymentARM {
 	}
 
 	return DeploymentARM{
-		DeploymentARMResource: DeploymentARMResource{
-			APIVersion: "2015-01-01",
-		},
+		APIVersion: "2015-01-01",
+		Name:       to.StringPtr(azureTelemetryPID),
+		Type:       to.StringPtr("Microsoft.Resources/deployments"),
 		DeploymentExtended: resources.DeploymentExtended{
-			Name:       to.StringPtr(azureTelemetryPID),
-			Type:       to.StringPtr("Microsoft.Resources/deployments"),
 			Properties: &properties,
 		},
 	}

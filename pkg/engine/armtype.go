@@ -183,9 +183,6 @@ type ImageARM struct {
 
 // DeploymentARM embeds the ARMResource type in resources.DeploymentExtended.
 type DeploymentARM struct {
-	APIVersion string  `json:"apiVersion,omitempty"`
-	Name       *string `json:"name,omitempty"`
-	Type       *string `json:"type,omitempty"`
 	DeploymentARMResource
 	resources.DeploymentExtended
 }
